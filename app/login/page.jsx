@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/config";
+import { auth, googleProvider } from "../firebase/config";
 import { useRouter } from "next/navigation";
+import { signInWithPopup } from "firebase/auth";
 import Link from "next/link";
 export default function SignUp() {
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -10,6 +11,14 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(true);
   const router = useRouter();
+
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (e) {
+      console.error(e);
+    }
+  };
   const handleLogin = async () => {
     try {
       const res = await signInWithEmailAndPassword(email, password);
@@ -20,7 +29,7 @@ export default function SignUp() {
       setUser(true);
       if (res !== undefined || res != null) {
         setTimeout(() => {
-          //   router.push("/");
+          router.push("/");
         }, 250);
       } else {
         setUser(false);
@@ -74,6 +83,12 @@ export default function SignUp() {
             className="w-full mt-4 px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition"
           >
             Login{" "}
+          </button>
+          <button
+            onClick={signInWithGoogle}
+            className="w-full mt-4 px-4 py-2 font-bold text-white bg-red-500 rounded-lg hover:bg-red-600 transition"
+          >
+            Sign In With Google
           </button>
         </div>
       </div>

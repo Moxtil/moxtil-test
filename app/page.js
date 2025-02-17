@@ -5,12 +5,10 @@ import { signOut } from "firebase/auth";
 import SignUp from "./sign-up/page";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useEffect } from "react";
 export default function Home() {
   const router = useRouter();
   const [user] = useAuthState(auth);
-  const userSession = sessionStorage.getItem("user");
-  if (!user || !sessionStorage) {
+  if (!user) {
     return <SignUp />;
   } else
     return (

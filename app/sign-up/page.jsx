@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/config";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { updateProfile } from "firebase/auth";
+import Link from "next/link";
 
 export default function SignUp() {
   const router = useRouter();
@@ -53,6 +53,8 @@ export default function SignUp() {
           <div>
             <label className="block text-gray-700 ">Username</label>
             <input
+              minLength={4}
+              maxLength={16}
               type="text"
               name="name"
               value={name}
@@ -78,6 +80,8 @@ export default function SignUp() {
           <div className="mt-4">
             <label className="block text-gray-700">Password</label>
             <input
+              minLength={8}
+              maxLength={16}
               type="password"
               name="password"
               value={password}
@@ -95,7 +99,6 @@ export default function SignUp() {
           )}
           <button
             onClick={handleSignUp}
-            type="submit"
             className="w-full mt-4 px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition"
           >
             Sign Up
